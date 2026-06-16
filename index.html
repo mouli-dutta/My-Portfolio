@@ -80,9 +80,14 @@
             from, to { border-color: transparent }
             50% { border-color: #06b6d4 }
         }
-    </style>
+    
+.mesh-gradient{position:fixed;inset:0;z-index:-3;background:radial-gradient(circle at 20% 20%,rgba(59,130,246,.25),transparent 40%),radial-gradient(circle at 80% 30%,rgba(6,182,212,.2),transparent 40%),radial-gradient(circle at 50% 80%,rgba(139,92,246,.18),transparent 40%);filter:blur(60px);animation:meshMove 15s ease-in-out infinite alternate}
+#particle-canvas{position:fixed;inset:0;z-index:-2;pointer-events:none}
+.section-shell{max-width:1200px;width:100%;margin:0 auto}
+@keyframes meshMove{from{transform:translate(-2%,-2%) scale(1)}to{transform:translate(2%,2%) scale(1.1)}}
+</style>
 </head>
-<body class="bg-dark-bg text-gray-100 font-sans">
+<body class="bg-dark-bg text-gray-100 font-sans"><div class="mesh-gradient"></div><canvas id="particle-canvas"></canvas>
 
     <!-- Navigation -->
     <nav class="fixed top-0 w-full bg-dark-bg/80 backdrop-blur-lg border-b border-dark-border z-50">
@@ -121,7 +126,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex items-center justify-center px-4 pt-16">
+    <section id="home" class="min-h-screen flex items-center justify-center px-4 pt-16"><div class="section-shell">
         <div class="max-w-4xl mx-auto text-center">
             <div class="mb-8 fade-in-up">
                 <img src="./static/images/profile.jpg" alt="Profile" class="w-32 h-32 rounded-full mx-auto mb-6 glow-effect object-cover" onerror="this.src='https://via.placeholder.com/150'">
@@ -183,10 +188,10 @@
             </div>
         </div>
 
-    </section>
+    </div></section>
 
     <!-- About Section -->
-    <section id="about" class="py-20 px-4">
+    <section id="about" class="py-20 px-4"><div class="section-shell">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-4xl font-bold mb-12 text-center">
                 About <span class="gradient-text">Me</span>
@@ -222,10 +227,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div></section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-20 px-4 bg-dark-surface/50">
+    <section id="skills" class="py-20 px-4 bg-dark-surface/50"><div class="section-shell">
         <div class="max-w-6xl mx-auto">
             <h2 class="text-4xl font-bold mb-12 text-center">
                 Tech <span class="gradient-text">Stack</span>
@@ -295,10 +300,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div></section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-20 px-4">
+    <section id="projects" class="py-20 px-4"><div class="section-shell">
         <div class="max-w-6xl mx-auto">
             <h2 class="text-4xl font-bold mb-12 text-center">
                 Featured <span class="gradient-text">Projects</span>
@@ -367,10 +372,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div></section>
 
     <!-- GitHub & LeetCode Stats -->
-    <section id="stats" class="py-20 px-4 bg-dark-surface/50">
+    <section id="stats" class="py-20 px-4 bg-dark-surface/50"><div class="section-shell">
         <div class="max-w-6xl mx-auto">
             <h2 class="text-4xl font-bold mb-12 text-center">
                 Coding <span class="gradient-text">Stats</span>
@@ -455,10 +460,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div></section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 px-4">
+    <section id="contact" class="py-20 px-4"><div class="section-shell">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-4xl font-bold mb-12 text-center">
                 Get In <span class="gradient-text">Touch</span>
@@ -523,7 +528,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div></section>
 
     <!-- Footer -->
     <footer class="py-8 px-4 border-t border-dark-border">
@@ -602,5 +607,10 @@
             });
         });
     </script>
-</body>
+<script>
+const c=document.getElementById('particle-canvas'),g=c.getContext('2d');function rs(){c.width=innerWidth;c.height=innerHeight}rs();addEventListener('resize',rs);
+const p=[...Array(70)].map(()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4}));
+(function a(){g.clearRect(0,0,c.width,c.height);for(const i of p){i.x+=i.vx;i.y+=i.vy;if(i.x<0||i.x>c.width)i.vx*=-1;if(i.y<0||i.y>c.height)i.vy*=-1;g.beginPath();g.arc(i.x,i.y,1.5,0,6.28);g.fillStyle='rgba(255,255,255,.5)';g.fill();}
+for(let i=0;i<p.length;i++)for(let j=i+1;j<p.length;j++){let dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,d=Math.hypot(dx,dy);if(d<120){g.strokeStyle='rgba(100,200,255,'+((1-d/120)*0.15)+')';g.beginPath();g.moveTo(p[i].x,p[i].y);g.lineTo(p[j].x,p[j].y);g.stroke();}}requestAnimationFrame(a)})();
+</script></body>
 </html>
